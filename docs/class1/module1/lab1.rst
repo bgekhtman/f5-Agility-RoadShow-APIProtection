@@ -1,49 +1,91 @@
-Lab – Download the |bip| |ve| Image
------------------------------------
+Using Postman to make API requests
+----------------------------------
 
-.. TODO:: Needs lab description
+In this module you will learn how to make API requests with the Postman
+client to simulate calls that might be made as part of an application,
+for instance, a mobile app, native client app, client side webapp, or
+server to server API request.
 
-This lab will teach you how to download the |bip| |ve| image to your system.
+Connect to Client Jumphost and launch Postman
+---------------------------------------------
 
-Task – Open a Web Browser
-~~~~~~~~~~~~~~~~~~~~~~~~~
+1. RDP to the client jumphost
 
-.. TODO:: Needs task description
+2. Launch the Postman application. The icon looks like this:
 
-In this task you will open a web browser and navigate to the |f5| Downloads
-site.
+ .. image:: /_static/image1.png
 
-.. NOTE:: An account is required to download software.  You can create one at
-   https://login.f5.com/resource/registerEmail.jsp
+Learn how to use the preconfigured API request collection
+---------------------------------------------------------
 
-Follow these steps to complete this task:
+In this task you will learn how to use the preconfigured set of requests
+in the HR API collection.
 
-#. Open your web browser
-#. Navigate to https://downloads.f5.com
-#. Login with your username and password.
-#. After logging in you should see the following window:
+1. Click Collections
 
-   |image1|
+2. Click HR API
 
-Task – Download the Image
-~~~~~~~~~~~~~~~~~~~~~~~~~
+3. Click List Departments
 
-.. TODO:: Needs task description
+4. Click Send
 
-In this task we will download the |f5| |bip| |ve| image to your system
+5. Notice the returned list of departments
 
-Follow these steps to complete this task:
+ .. image:: /_static/image2.png
 
-#. Click the 'Find a Download' button.
+Learn how to change environment variables
+-----------------------------------------
 
-   .. image:: /_static/image002.png
+In this task you will learn how to change the environment variables that
+are configured to alter which department you are querying data for. In
+this case the variables are used in the URI, but there are other
+variables used in some queries in the body as well.
 
-#. Click the link that contains the |bip| TMOS software version you would like
-   to download.
+Determine Police Department Salary Total
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   .. IMPORTANT:: Be sure to click a link that has "\ |ve|" in the name
+1. Click on the Return Department Salary Total request in the collection
 
-#. Find the image appropriate for your hypervisor
-#. Download the image and save it to you local system
+2. Click Send
 
-.. |image1| image:: /_static/image001.png
+3. Notice the total returned is 1106915639.7999947
+
+Change environment variable for department
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Notice the GET request URI has a variable in it named {{department}}
+
+ .. image:: /_static/image3.png
+
+2. Notice in the top right we have an environment set named “API
+   Protection Lab”.
+
+3. Click the gear in the top right, then click “manage environments”.
+
+ .. image:: /_static/image4.png
+
+4. Click API Protection Lab
+
+ .. image:: /_static/image5.png
+
+5. Change the value for department from “police” to “fire” then click
+   update
+
+ .. image:: /_static/image6.png
+
+6. Click the X in the top right to close the manage environments window
+
+ .. image:: /_static/image7.png
+
+Determine Fire Department Salary Total
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Click Send
+
+2. Notice the total returned is now 457971613.68
+
+Return the Environment variables to default
+---------------------------------------------------
+
+1. Change the department variable back to “police”
+

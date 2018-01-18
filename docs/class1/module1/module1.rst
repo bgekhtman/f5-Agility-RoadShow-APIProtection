@@ -1,10 +1,6 @@
-Module – Installing a BIG-IP Virtual Edition
-=============================================
+Making API requests with POSTMAN
+=========================================
 
-.. TODO:: Needs module description
-
-In this module you will learn how to install a |f5| |bip| |ve| into your
-environment.
 
 .. toctree::
    :maxdepth: 1

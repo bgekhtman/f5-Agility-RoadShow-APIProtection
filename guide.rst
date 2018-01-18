@@ -570,7 +570,7 @@ departments
 If you cannot access the data you have made a mistake and must correct
 it before continuing. This request should be unaffected by your changes.
 
-Task 4: Validate your policy blocks access to /person requests without HR group membership
+Task 4: Validate your policy blocks access to person requests without HR group membership
 ------------------------------------------------------------------------------------------
 
 In this task you will test the settings you just put in the per request

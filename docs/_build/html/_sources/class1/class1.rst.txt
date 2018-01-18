@@ -1,16 +1,11 @@
-Class - |classname|
+|classname|
 ===================
 
-.. TODO:: Need class description
+Deploy UDF blueprint “ISCFY18 – API Protection Lab”. You must complete
+Postman queries from the client jumphost but you can complete Big-IP
+configuration from the client jumphost or your laptop’s browser by
+launching TMUI from UDF (Access -> TMUI) (recommended).
 
-This class covers the following topics:
-
-- Downloading a |f5| |bip| |ve|
-- Installing a |bip| |ve| image on a hypervisor
-- Installing a |f5| |bip| Appliance
-- Powering on a |bip| Appliance
-
-Expected time to complete: **3 hours**
 
 .. toctree::
    :maxdepth: 1
