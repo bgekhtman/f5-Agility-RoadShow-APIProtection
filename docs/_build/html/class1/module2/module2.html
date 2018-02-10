@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2.2.1. Implement Coarse-Grain Authorization" href="lab1.html" />
-    <link rel="prev" title="2.1.1. Using Postman to make API requests" href="../module1/lab1.html" />
+    <link rel="next" title="2.3. Adding Fine-Grain Authorization" href="../module3/module3.html" />
+    <link rel="prev" title="2.1. Making API requests with POSTMAN" href="../module1/module1.html" />
 <!--
 # Copyright 2017 F5 Networks
 #
@@ -208,6 +208,19 @@
   </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+  <p class="caption">
+   <span class="caption-text">Current Page</span>
+  </p>
+  <ul>
+<li><a class="reference internal" href="#">2.2. Implement Coarse-Grain Authorization</a><ul>
+<li><a class="reference internal" href="#add-the-policies-to-the-virtual-server">2.2.1. Add the policies to the virtual server</a></li>
+<li><a class="reference internal" href="#test-access-to-the-api">2.2.2. Test access to the API</a></li>
+<li><a class="reference internal" href="#get-a-jwt-from-the-authorization-server">2.2.3. Get a JWT from the Authorization Server</a></li>
+<li><a class="reference internal" href="#send-the-request-with-jwt-and-review-response">2.2.4. Send the request with JWT and review response</a></li>
+</ul>
+</li>
+</ul>
+
 
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
@@ -215,19 +228,21 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../class1.html">2. API Protection with F5</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../module1/module1.html">2.1. Making API requests with POSTMAN</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Implement Coarse-Grain Authorization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../module3/module3.html">2.3. Implement Adding Fine-Grain Authorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module3/module3.html">2.3. Adding Fine-Grain Authorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module4/module4.html">2.4. JSON API Protection By ASM</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">3. Examples of Common Formatting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../markdown.html">4. Markdown files are also supported</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../class2/class2.html">3. F5 BIG-IP configuration deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">4. Examples of Common Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown.html">5. Markdown files are also supported</a></li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../module1/lab1.html"
-                        title="previous chapter">2.1.1. Using Postman to make API requests</a></p>
+  <p class="topless"><a href="../module1/module1.html"
+                        title="previous chapter">2.1. Making API requests with POSTMAN</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="lab1.html"
-                        title="next chapter">2.2.1. Implement Coarse-Grain Authorization</a></p>
+  <p class="topless"><a href="../module3/module3.html"
+                        title="next chapter">2.3. Adding Fine-Grain Authorization</a></p>
         
       </div>
       <div class="col-md-offset-3 col-sm-offset-3 main">
@@ -239,14 +254,136 @@
   <div class="section" id="implement-coarse-grain-authorization">
 <h1>2.2. Implement Coarse-Grain Authorization<a class="headerlink" href="#implement-coarse-grain-authorization" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html">2.2.1. Implement Coarse-Grain Authorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#add-the-policies-to-the-virtual-server">2.2.2. Add the policies to the virtual server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#test-access-to-the-api">2.2.3. Test access to the API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#get-a-jwt-from-the-authorization-server">2.2.4. Get a JWT from the Authorization Server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#send-the-request-with-jwt-and-review-response">2.2.5. Send the request with JWT and review response</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab2.html">2.2.6. Lab – Power-on the BIG-IP Appliance</a></li>
-</ul>
+</div>
+<p>In this module you will implement authorization requirements. You will
+require a valid JWT (JSON Web Token) before a client can access the API.
+You will then gather a valid JWT and leverage it to make an API request.</p>
+<div class="section" id="add-the-policies-to-the-virtual-server">
+<h2>2.2.1. Add the policies to the virtual server<a class="headerlink" href="#add-the-policies-to-the-virtual-server" title="Permalink to this headline">¶</a></h2>
+<p>In this task you will add the policies you created to the virtual
+server.</p>
+<ol class="arabic simple">
+<li>Click Local Traffic -&gt; <strong>Virtual Servers</strong></li>
+<li>Click <strong>api.vlab.f5demo.com</strong></li>
+<li>Change Access Profile from none to <strong>api-psp</strong> (NOT as-psp)</li>
+<li>Change Per Request Policy from none to <strong>api-prp</strong></li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image19.png" src="../../_images/image19.png" />
+</div></blockquote>
+<ol class="arabic simple" start="5">
+<li>Click Update</li>
+</ol>
+</div>
+<div class="section" id="test-access-to-the-api">
+<h2>2.2.2. Test access to the API<a class="headerlink" href="#test-access-to-the-api" title="Permalink to this headline">¶</a></h2>
+<p>In this task you will test your access to the API and find it is blocked
+because you do not present a valid JWT.</p>
+<ol class="arabic simple">
+<li>Open Postman on the jumphost client</li>
+<li>Select List Departments from the HR API collection and send the
+request</li>
+<li>Review the response, note the 401 unauthorized and the header
+indicating you did not present a valid token</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image20.png" src="../../_images/image20.png" />
+</div></blockquote>
+</div>
+<div class="section" id="get-a-jwt-from-the-authorization-server">
+<h2>2.2.3. Get a JWT from the Authorization Server<a class="headerlink" href="#get-a-jwt-from-the-authorization-server" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Click the <strong>type</strong> drop down under the <strong>authorization</strong> tab.</li>
+<li>Select <strong>OAuth 2.0</strong></li>
+<li>Click <strong>Get New Access Token</strong></li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image21.png" src="../../_images/image21.png" />
+</div></blockquote>
+<p>Postman provides a mechanism to handle the OAuth client workflow
+automatically. This means it will handle getting the authorization code
+and then exchange it for an access token, which you will use. Without
+this you would make two separate requests, one to get an authorization
+code and another to exchange that for an access token.</p>
+<ol class="arabic simple">
+<li>Fields should be prefilled, but verify they match the below:</li>
+</ol>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Token name</td>
+<td>employeeuser</td>
+</tr>
+<tr class="row-odd"><td>Grant Type</td>
+<td>Authorization Code</td>
+</tr>
+<tr class="row-even"><td>Callback URL</td>
+<td><a class="reference external" href="https://www.getpostman.com/oauth2/callback">https://www.getpostman.com/oauth2/callback</a></td>
+</tr>
+<tr class="row-odd"><td>Auth URL</td>
+<td><a class="reference external" href="https://as.vlab.f5demo.com/f5-oauth2/v1/authorize">https://as.vlab.f5demo.com/f5-oauth2/v1/authorize</a></td>
+</tr>
+<tr class="row-even"><td>Access Token URL</td>
+<td><a class="reference external" href="https://as.vlab.f5demo.com/f5-oauth2/v1/token">https://as.vlab.f5demo.com/f5-oauth2/v1/token</a></td>
+</tr>
+<tr class="row-odd"><td>Client ID</td>
+<td>9f1d39a8255e066b89a51f56b27506d39442c4f608c2f859</td>
+</tr>
+<tr class="row-even"><td>Client Authenticatin</td>
+<td>Send as Basic Auth header</td>
+</tr>
+</tbody>
+</table>
+<p>Most of this data is provided by the authorization server. The callback
+URL specified here is a special callback URL that the Postman client
+intercepts and handles rather than calling out to the getpostman.com
+website.</p>
+<blockquote>
+<div><img alt="../../_images/image22.png" src="../../_images/image22.png" />
+</div></blockquote>
+<ol class="arabic simple">
+<li>Click <strong>Request Token</strong></li>
+<li>Select <strong>employeeuser</strong> in the authentication window that pops up and
+click <strong>Logon</strong></li>
+<li>Click the <strong>X</strong> to close this window</li>
+<li>Make sure <strong>employeeuser</strong> is selected under Available Tokens drop
+down</li>
+<li>Select <strong>Request Headers</strong> from the Add Authorization Data To drop
+down</li>
+<li>Click <strong>Preview Request</strong>, the result should be this:</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image23.png" src="../../_images/image23.png" />
+</div></blockquote>
+<ol class="arabic simple" start="7">
+<li>Go to the <strong>Headers</strong> tab and review the inserted <strong>Bearer</strong> token
+header:</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image24.png" src="../../_images/image24.png" />
+</div></blockquote>
+</div>
+<div class="section" id="send-the-request-with-jwt-and-review-response">
+<h2>2.2.4. Send the request with JWT and review response<a class="headerlink" href="#send-the-request-with-jwt-and-review-response" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Click <strong>Send</strong> and review the response.</li>
+<li>Note that now it is a 200 OK instead of 401 Unauthorized and that you
+have response data in the body.</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image25.png" src="../../_images/image25.png" />
+</div></blockquote>
+<p>You have now implemented coarse grained authorization and are requiring
+clients to request a JWT from a trusted authorization server before
+allowing access to the API.</p>
 </div>
 </div>
 
@@ -255,10 +392,10 @@
 		     <div class="row next-prev-btn-row">
            <div class="col-lg-12">
            
-		        <a href="../module1/lab1.html" title="2.1.1. Using Postman to make API requests" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
+		        <a href="../module1/module1.html" title="2.1. Making API requests with POSTMAN" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
            
            
-              <a href="lab1.html" title="2.2.1. Implement Coarse-Grain Authorization" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+              <a href="../module3/module3.html" title="2.3. Adding Fine-Grain Authorization" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
            
 		     </div>
          </div>

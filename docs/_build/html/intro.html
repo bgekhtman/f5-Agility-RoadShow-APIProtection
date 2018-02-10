@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="2. Class - API Protection with F5" href="class1/class1.html" />
+    <link rel="next" title="2. API Protection with F5" href="class1/class1.html" />
     <link rel="prev" title="F5 Agility Labs - Index" href="index.html" />
 <!--
 # Copyright 2017 F5 Networks
@@ -213,10 +213,8 @@
   </p>
   <ul>
 <li><a class="reference internal" href="#">1. Getting Started</a><ul>
-<li><a class="reference internal" href="#lab-topology">1.1. Lab Topology</a><ul>
-<li><a class="reference internal" href="#lab-components">1.1.1. Lab Components</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#lab-credentials">1.1. Lab Credentials</a></li>
+<li><a class="reference internal" href="#lab-topology">1.2. Lab Topology</a></li>
 </ul>
 </li>
 </ul>
@@ -225,12 +223,12 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">1. Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lab-topology">1.1. Lab Topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lab-credentials">1.1. Lab Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lab-topology">1.2. Lab Topology</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="class1/class1.html">2. Class - API Protection with F5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">3. Examples of Common Formatting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">4. Markdown files are also supported</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class1/class1.html">2. API Protection with F5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class2/class2.html">3. F5 BIG-IP configuration deep dive</a></li>
 </ul>
 
   <h4>Previous topic</h4>
@@ -238,7 +236,7 @@
                         title="previous chapter">F5 Agility Labs - Index</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="class1/class1.html"
-                        title="next chapter">2. Class - API Protection with F5</a></p>
+                        title="next chapter">2. API Protection with F5</a></p>
         
       </div>
       <div class="col-md-offset-3 col-sm-offset-3 main">
@@ -249,64 +247,57 @@
         
   <div class="section" id="getting-started">
 <h1>1. Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">Complete getting started instructions</p>
-</div>
-<p>Please follow the instructions provided by the instructor to start your
-lab and access your jump host.</p>
+<p>Instructor will provide you with access credentials to training portal as well as login page.</p>
+<blockquote>
+<div><img alt="_images/portal1.png" src="_images/portal1.png" />
+</div></blockquote>
+<p>Once logged in you should tap on “View”. You should be able to see Virtual Machines as shown below. Copy DNS name of Windows jumpbox to clipboard and use your Remote Desktop client to connect.</p>
+<blockquote>
+<div><img alt="_images/portal2.png" src="_images/portal2.png" />
+</div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">All work for this lab will be performed exclusively from the Windows
-jumphost. No installation or interaction with your local system is
+Jumpbox. No installation or interaction with your local system is
 required.</p>
 </div>
-<div class="section" id="lab-topology">
-<h2>1.1. Lab Topology<a class="headerlink" href="#lab-topology" title="Permalink to this headline">¶</a></h2>
-<div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p class="last">Complete lab topology</p>
-</div>
-<p>The following components have been included in your lab environment:</p>
-<ul class="simple">
-<li>2 x F5 BIG-IP VE (v12.1)</li>
-<li>1 x F5 iWorkflow VE (v2.1)</li>
-<li>1 x Linux LAMP Webserver (xubuntu 14.04)</li>
-<li>1 x Windows Jumphost</li>
-</ul>
-<div class="section" id="lab-components">
-<h3>1.1.1. Lab Components<a class="headerlink" href="#lab-components" title="Permalink to this headline">¶</a></h3>
-<div class="admonition-todo admonition" id="index-2">
-<p class="first admonition-title">Todo</p>
-<p class="last">Complete lab components table</p>
-</div>
-<p>The following table lists VLANS, IP Addresses and Credentials for all
-components:</p>
+<div class="section" id="lab-credentials">
+<h2>1.1. Lab Credentials<a class="headerlink" href="#lab-credentials" title="Permalink to this headline">¶</a></h2>
+<p>The following table lists access credential for all required components:</p>
 <table border="1" class="colwidths-given docutils">
 <colgroup>
-<col width="20%" />
-<col width="40%" />
-<col width="40%" />
+<col width="50%" />
+<col width="50%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head stub"><strong>Component</strong></th>
-<th class="head"><strong>VLAN/IP Address(es)</strong></th>
 <th class="head"><strong>Credentials</strong></th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><th class="stub">Sample Host</th>
-<td><ul class="first last simple">
-<li><strong>Management:</strong> 10.1.1.250</li>
-<li><strong>Internal:</strong> 10.1.10.250</li>
-<li><strong>External:</strong> 10.1.20.250</li>
-</ul>
-</td>
+<tr class="row-even"><th class="stub">Windows Jumpbox</th>
+<td><code class="docutils literal"><span class="pre">admin</span></code>/<code class="docutils literal"><span class="pre">admin</span></code></td>
+</tr>
+<tr class="row-odd"><th class="stub">F5 BIG-IP VE</th>
 <td><code class="docutils literal"><span class="pre">admin</span></code>/<code class="docutils literal"><span class="pre">admin</span></code></td>
 </tr>
 </tbody>
 </table>
+<p>The BIG-IP VE is accessible from the Windows Jumpbox at <a class="reference external" href="https://192.168.1.5">https://192.168.1.5</a></p>
 </div>
+<div class="section" id="lab-topology">
+<h2>1.2. Lab Topology<a class="headerlink" href="#lab-topology" title="Permalink to this headline">¶</a></h2>
+<p>The following components have been included in your lab environment:</p>
+<ul class="simple">
+<li>1 x F5 BIG-IP VE (v13.1)</li>
+<li>1 x Linux Webserver (xubuntu 14.04)</li>
+<li>1 x Windows Jumphost</li>
+</ul>
+<p>On the picture below you can see network topology. Basically, you will be sending various API calls to API server proxied through BIG-IP VE.</p>
+<blockquote>
+<div><img alt="_images/diagram.png" src="_images/diagram.png" />
+</div></blockquote>
+<p>Traffic from Windows Jumpbox will be proxied through the BIG-IP to API Server.</p>
 </div>
 </div>
 
@@ -318,7 +309,7 @@ components:</p>
 		        <a href="index.html" title="F5 Agility Labs - Index" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
            
            
-              <a href="class1/class1.html" title="2. Class - API Protection with F5" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+              <a href="class1/class1.html" title="2. API Protection with F5" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
            
 		     </div>
          </div>

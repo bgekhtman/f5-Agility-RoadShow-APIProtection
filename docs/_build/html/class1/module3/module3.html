@@ -28,8 +28,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2.3.1. Adding Fine-Grain Authorization" href="lab1.html" />
-    <link rel="prev" title="2.2.6. Lab – Power-on the BIG-IP Appliance" href="../module2/lab2.html" />
+    <link rel="next" title="2.4. API Protection By ASM" href="../module4/module4.html" />
+    <link rel="prev" title="2.2. Implement Coarse-Grain Authorization" href="../module2/module2.html" />
 <!--
 # Copyright 2017 F5 Networks
 #
@@ -208,6 +208,18 @@
   </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+  <p class="caption">
+   <span class="caption-text">Current Page</span>
+  </p>
+  <ul>
+<li><a class="reference internal" href="#">2.3. Adding Fine-Grain Authorization</a><ul>
+<li><a class="reference internal" href="#id1">2.3.1. Adding Fine-Grain Authorization</a></li>
+<li><a class="reference internal" href="#validate-your-policy-blocks-access-to-person-requests-without-hr-group-membership">2.3.2. Validate your policy blocks access to person requests without HR group membership</a></li>
+<li><a class="reference internal" href="#acquire-a-jwt-for-hruser-and-validate-it-can-access-person">2.3.3. Acquire a JWT for hruser and validate it can access /person</a></li>
+</ul>
+</li>
+</ul>
+
 
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
@@ -216,18 +228,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../module1/module1.html">2.1. Making API requests with POSTMAN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../module2/module2.html">2.2. Implement Coarse-Grain Authorization</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.3. Adding Fine-Grain Authorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module4/module4.html">2.4. API Protection By ASM</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">3. Examples of Common Formatting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../markdown.html">4. Markdown files are also supported</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../class2/class2.html">3. F5 BIG-IP configuration deep dive</a></li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../module2/lab2.html"
-                        title="previous chapter">2.2.6. Lab – Power-on the BIG-IP Appliance</a></p>
+  <p class="topless"><a href="../module2/module2.html"
+                        title="previous chapter">2.2. Implement Coarse-Grain Authorization</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="lab1.html"
-                        title="next chapter">2.3.1. Adding Fine-Grain Authorization</a></p>
+  <p class="topless"><a href="../module4/module4.html"
+                        title="next chapter">2.4. API Protection By ASM</a></p>
         
       </div>
       <div class="col-md-offset-3 col-sm-offset-3 main">
@@ -239,11 +251,115 @@
   <div class="section" id="adding-fine-grain-authorization">
 <h1>2.3. Adding Fine-Grain Authorization<a class="headerlink" href="#adding-fine-grain-authorization" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html">2.3.1. Adding Fine-Grain Authorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#validate-your-policy-blocks-access-to-person-requests-without-hr-group-membership">2.3.2. Validate your policy blocks access to person requests without HR group membership</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#acquire-a-jwt-for-hruser-and-validate-it-can-access-person">2.3.3. Acquire a JWT for hruser and validate it can access /person</a></li>
-</ul>
+</div>
+<div class="section" id="id1">
+<h2>2.3.1. Adding Fine-Grain Authorization<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>In this module you will add fine-grain controls to your policy to
+restrict access to parts of the API based on parameters in the JWT. The
+example will relate to user group membership, but it could be many
+parameters (e.g. company, user, group, as source, etc).</p>
+<p>The goal is to restrict access to any person API requests to only
+members of the HR department.</p>
+</div>
+<div class="section" id="validate-your-policy-blocks-access-to-person-requests-without-hr-group-membership">
+<h2>2.3.2. Validate your policy blocks access to person requests without HR group membership<a class="headerlink" href="#validate-your-policy-blocks-access-to-person-requests-without-hr-group-membership" title="Permalink to this headline">¶</a></h2>
+<p>In this task you will test the settings you just put in the per request
+policy. You are expecting to be denied access to the /person URL because
+employeeuser is not in the HR group that you have marked as a required
+value in the JWT.</p>
+<ol class="arabic simple">
+<li>On the left side, select <strong>List Employee Record</strong>. It will now appear
+in another tab in the middle section and you should select it if it
+is not already.</li>
+<li>Under Authorization type select <strong>OAuth 2.0</strong> for the type</li>
+<li>From the <strong>Available Tokens</strong> drop down, select <strong>employeeuser</strong></li>
+<li>Make sure Add Authorization Data is set to <strong>Request Headers</strong></li>
+<li>Click <strong>Preview Request</strong> and note the header has been inserted</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image30.png" src="../../_images/image30.png" />
+</div></blockquote>
+<ol class="arabic simple" start="6">
+<li>Click <strong>Send</strong></li>
+<li>The result should be a <strong>401 unauthorized</strong> with no data in the body.
+The header will report an invalid token.</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image31.png" src="../../_images/image31.png" />
+</div></blockquote>
+<p>You were denied access because the JWT retrieved by this user is not
+allowed to access that data. We can resolve this by using credentials
+that will generate a JWT valid for this request.</p>
+</div>
+<div class="section" id="acquire-a-jwt-for-hruser-and-validate-it-can-access-person">
+<h2>2.3.3. Acquire a JWT for hruser and validate it can access /person<a class="headerlink" href="#acquire-a-jwt-for-hruser-and-validate-it-can-access-person" title="Permalink to this headline">¶</a></h2>
+<p>In this task you will get another JWT and use that to gain access to the
+/person portion of the API.</p>
+<ol class="arabic simple">
+<li>Click Get <strong>New Access Token</strong></li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image32.png" src="../../_images/image32.png" />
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Change the token name to <strong>hruser</strong>, the rest of the settings should
+be already correct.</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image33.png" src="../../_images/image33.png" />
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>Click <strong>Request Token</strong></li>
+<li>Select <strong>hruser</strong> at the logon page and press logon.</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image34.png" src="../../_images/image34.png" />
+</div></blockquote>
+<ol class="arabic simple" start="5">
+<li>A JWT should be returned and your JWT management token window will
+look like this:</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image35.png" src="../../_images/image35.png" />
+</div></blockquote>
+<ol class="arabic simple" start="6">
+<li>Notice you now have two tokens, and click the X to close the window</li>
+<li>Select hruser from the Available Tokens drop down</li>
+<li>Click Preview Request</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image36.png" src="../../_images/image36.png" />
+</div></blockquote>
+<ol class="arabic simple" start="9">
+<li>Click Send, you should get a 200 OK response and data in the
+response body like this:</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image37.png" src="../../_images/image37.png" />
+</div></blockquote>
+<ol class="arabic simple" start="10">
+<li>You can now change the token used on any request by using this
+process:<ol class="loweralpha">
+<li>Select the request</li>
+<li>Select the Authorization tab</li>
+<li>Select OAuth 2.0 from the type drop down menu</li>
+<li>Select the correct token from the Available Tokens drop down menu</li>
+<li>Make sure Authorization Data is set to Request Headers</li>
+<li>Click Preview Request to add the token to the headers</li>
+<li>Click Send on the request</li>
+</ol>
+</li>
+</ol>
+<p>In this module we’ve used group membership to restrict access to
+particular URIs, but in production you may encounter many different
+variations. For example, an iRule can set an APM session variable equal
+to the request method (e.g. GET, POST, etc) and then in the Per Request
+Policy you can branch on method, only allowing POST from certain users,
+groups, IPs, etc</p>
+<p>JWTs are typically short lived and may or may not use refresh tokens. In
+this lab the JWTs have been set as valid for several hours so you will
+not need to get new JWTs during the lab.</p>
+<p>More information about BIG-IP configuration settings available here <a class="reference internal" href="../../class2/class2.html#f5-big-ip-configuration-deep-dive"><span class="std std-ref">F5 BIG-IP configuration deep dive</span></a></p>
 </div>
 </div>
 
@@ -252,10 +368,10 @@
 		     <div class="row next-prev-btn-row">
            <div class="col-lg-12">
            
-		        <a href="../module2/lab2.html" title="2.2.6. Lab – Power-on the BIG-IP Appliance" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
+		        <a href="../module2/module2.html" title="2.2. Implement Coarse-Grain Authorization" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
            
            
-              <a href="lab1.html" title="2.3.1. Adding Fine-Grain Authorization" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+              <a href="../module4/module4.html" title="2.4. API Protection By ASM" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
            
 		     </div>
          </div>

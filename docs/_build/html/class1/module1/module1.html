@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2.1.1. Using Postman to make API requests" href="lab1.html" />
+    <link rel="next" title="2.2. Implement Coarse-Grain Authorization" href="../module2/module2.html" />
     <link rel="prev" title="2. API Protection with F5" href="../class1.html" />
 <!--
 # Copyright 2017 F5 Networks
@@ -208,6 +208,25 @@
   </form>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+  <p class="caption">
+   <span class="caption-text">Current Page</span>
+  </p>
+  <ul>
+<li><a class="reference internal" href="#">2.1. Making API requests with POSTMAN</a><ul>
+<li><a class="reference internal" href="#using-postman-to-make-api-requests">2.1.1. Using Postman to make API requests</a></li>
+<li><a class="reference internal" href="#connect-to-client-jumphost-and-launch-postman">2.1.2. Connect to Client Jumphost and launch Postman</a></li>
+<li><a class="reference internal" href="#learn-how-to-use-the-preconfigured-api-request-collection">2.1.3. Learn how to use the preconfigured API request collection</a></li>
+<li><a class="reference internal" href="#learn-how-to-change-environment-variables">2.1.4. Learn how to change environment variables</a><ul>
+<li><a class="reference internal" href="#determine-police-department-salary-total">2.1.4.1. Determine Police Department Salary Total</a></li>
+<li><a class="reference internal" href="#change-environment-variable-for-department">2.1.4.2. Change environment variable for department</a></li>
+<li><a class="reference internal" href="#determine-fire-department-salary-total">2.1.4.3. Determine Fire Department Salary Total</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-the-environment-variables-to-default">2.1.5. Return the Environment variables to default</a></li>
+</ul>
+</li>
+</ul>
+
 
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
@@ -215,19 +234,21 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../class1.html">2. API Protection with F5</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. Making API requests with POSTMAN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../module2/module2.html">2.2. Implement Coarse-Grain Authorization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../module3/module3.html">2.3. Implement Adding Fine-Grain Authorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module3/module3.html">2.3. Adding Fine-Grain Authorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module4/module4.html">2.4. JSON API Protection By ASM</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">3. Examples of Common Formatting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../markdown.html">4. Markdown files are also supported</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../class2/class2.html">3. F5 BIG-IP configuration deep dive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">4. Examples of Common Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../markdown.html">5. Markdown files are also supported</a></li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="../class1.html"
                         title="previous chapter">2. API Protection with F5</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="lab1.html"
-                        title="next chapter">2.1.1. Using Postman to make API requests</a></p>
+  <p class="topless"><a href="../module2/module2.html"
+                        title="next chapter">2.2. Implement Coarse-Grain Authorization</a></p>
         
       </div>
       <div class="col-md-offset-3 col-sm-offset-3 main">
@@ -239,13 +260,102 @@
   <div class="section" id="making-api-requests-with-postman">
 <h1>2.1. Making API requests with POSTMAN<a class="headerlink" href="#making-api-requests-with-postman" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html">2.1.1. Using Postman to make API requests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#connect-to-client-jumphost-and-launch-postman">2.1.2. Connect to Client Jumphost and launch Postman</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#learn-how-to-use-the-preconfigured-api-request-collection">2.1.3. Learn how to use the preconfigured API request collection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#learn-how-to-change-environment-variables">2.1.4. Learn how to change environment variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lab1.html#return-the-environment-variables-to-default">2.1.5. Return the Environment variables to default</a></li>
-</ul>
+</div>
+<div class="section" id="using-postman-to-make-api-requests">
+<h2>2.1.1. Using Postman to make API requests<a class="headerlink" href="#using-postman-to-make-api-requests" title="Permalink to this headline">¶</a></h2>
+<p>In this module you will learn how to make API requests with the Postman
+client to simulate calls that might be made as part of an application,
+for instance, a mobile app, native client app, client side webapp, or
+server to server API request.</p>
+</div>
+<div class="section" id="connect-to-client-jumphost-and-launch-postman">
+<h2>2.1.2. Connect to Client Jumphost and launch Postman<a class="headerlink" href="#connect-to-client-jumphost-and-launch-postman" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>RDP to the client jumphost</li>
+<li>Launch the Postman application. The icon looks like this:</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image1.png" src="../../_images/image1.png" />
+</div></blockquote>
+</div>
+<div class="section" id="learn-how-to-use-the-preconfigured-api-request-collection">
+<h2>2.1.3. Learn how to use the preconfigured API request collection<a class="headerlink" href="#learn-how-to-use-the-preconfigured-api-request-collection" title="Permalink to this headline">¶</a></h2>
+<p>In this task you will learn how to use the preconfigured set of requests
+in the HR API collection.</p>
+<ol class="arabic simple">
+<li>Click Collections</li>
+<li>Click HR API</li>
+<li>Click List Departments</li>
+<li>Click Send</li>
+<li>Notice the returned list of departments</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image2.png" src="../../_images/image2.png" />
+</div></blockquote>
+</div>
+<div class="section" id="learn-how-to-change-environment-variables">
+<h2>2.1.4. Learn how to change environment variables<a class="headerlink" href="#learn-how-to-change-environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>In this task you will learn how to change the environment variables that
+are configured to alter which department you are querying data for. In
+this case the variables are used in the URI, but there are other
+variables used in some queries in the body as well.</p>
+<div class="section" id="determine-police-department-salary-total">
+<h3>2.1.4.1. Determine Police Department Salary Total<a class="headerlink" href="#determine-police-department-salary-total" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Click on the Return Department Salary Total request in the collection</li>
+<li>Click Send</li>
+<li>Notice the total returned is 1106915639.7999947</li>
+</ol>
+</div>
+<div class="section" id="change-environment-variable-for-department">
+<h3>2.1.4.2. Change environment variable for department<a class="headerlink" href="#change-environment-variable-for-department" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Notice the GET request URI has a variable in it named {{department}}</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image3.png" src="../../_images/image3.png" />
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Notice in the top right we have an environment set named “API
+Protection Lab”.</li>
+<li>Click the gear in the top right, then click “manage environments”.</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image4.png" src="../../_images/image4.png" />
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li>Click API Protection Lab</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image5.png" src="../../_images/image5.png" />
+</div></blockquote>
+<ol class="arabic simple" start="5">
+<li>Change the value for department from “police” to “fire” then click
+update</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image6.png" src="../../_images/image6.png" />
+</div></blockquote>
+<ol class="arabic simple" start="6">
+<li>Click the X in the top right to close the manage environments window</li>
+</ol>
+<blockquote>
+<div><img alt="../../_images/image7.png" src="../../_images/image7.png" />
+</div></blockquote>
+</div>
+<div class="section" id="determine-fire-department-salary-total">
+<h3>2.1.4.3. Determine Fire Department Salary Total<a class="headerlink" href="#determine-fire-department-salary-total" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Click Send</li>
+<li>Notice the total returned is now 457971613.68</li>
+</ol>
+</div>
+</div>
+<div class="section" id="return-the-environment-variables-to-default">
+<h2>2.1.5. Return the Environment variables to default<a class="headerlink" href="#return-the-environment-variables-to-default" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Change the department variable back to “police”</li>
+</ol>
 </div>
 </div>
 
@@ -257,7 +367,7 @@
 		        <a href="../class1.html" title="2. API Protection with F5" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
            
            
-              <a href="lab1.html" title="2.1.1. Using Postman to make API requests" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+              <a href="../module2/module2.html" title="2.2. Implement Coarse-Grain Authorization" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
            
 		     </div>
          </div>
