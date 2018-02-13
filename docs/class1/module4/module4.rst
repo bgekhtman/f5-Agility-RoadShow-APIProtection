@@ -44,9 +44,7 @@ observe how it’s been mitigated by Application DoS profile.
 
  .. image:: /_static/image72.png
 
-5. Choose HR\_API\_DoS collection and configure the run as following.
-   Click Run HR\_API\_DoS. Assure right environment has been chosen, and
-   For No Request Log has been configured:
+5. Choose HR\_API\_DoS collection and use the screenshot below to configure parameters. Ensure right environment has been chosen, iterations updated and Log responses as “For no requests”. Once the parameters have been selected click Run HR_API_DoS. 
 
  .. image:: /_static/image73.png
 
@@ -69,7 +67,7 @@ Accessing Disallowed URL
 
 In this task, you will try accessing URL not allowed by ASM policy.
 
-1. On the client machine Postman app chose Disallowed URL request.
+1. On the client machine Postman app proceed to “HR_API_Illigal” collection and select Disallowed URL request.
 
 2. Use previously retrieved access token by setting Authorization Type
    to Oath 2.0 and Available Tokens to hruser (similar to Module 3 Task

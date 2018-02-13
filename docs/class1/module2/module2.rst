@@ -16,15 +16,15 @@ Add the policies to the virtual server
 In this task you will add the policies you created to the virtual
 server.
 
-1. Click Local Traffic -> **Virtual Servers**
+1. Open web-browser, connect to BIG-IP https://https://192.168.1.5 (login: admin, password: admin) and click Local Traffic -> **Virtual Servers**
 
 2. Click **api.vlab.f5demo.com**
 
-3. Change Access Profile from none to **api-psp** (NOT as-psp)
+3. Change Access Profile from none to **prebuilt-api-psp**
 
-4. Change Per Request Policy from none to **api-prp**
+4. Change Per Request Policy from none to **prebuilt-api-prp**
 
- .. image:: /_static/image19.png
+ .. image:: /_static/assign.png
 
 5. Click Update
 

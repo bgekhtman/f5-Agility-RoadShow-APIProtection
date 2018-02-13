@@ -229,12 +229,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../module1/module1.html">2.1. Making API requests with POSTMAN</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Implement Coarse-Grain Authorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../module3/module3.html">2.3. Adding Fine-Grain Authorization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../module4/module4.html">2.4. JSON API Protection By ASM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module4/module4.html">2.4. API Protection By ASM</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../class2/class2.html">3. F5 BIG-IP configuration deep dive</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">4. Examples of Common Formatting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../markdown.html">5. Markdown files are also supported</a></li>
 </ul>
 
   <h4>Previous topic</h4>
@@ -263,13 +261,13 @@ You will then gather a valid JWT and leverage it to make an API request.</p>
 <p>In this task you will add the policies you created to the virtual
 server.</p>
 <ol class="arabic simple">
-<li>Click Local Traffic -&gt; <strong>Virtual Servers</strong></li>
+<li>Open web-browser, connect to BIG-IP <a class="reference external" href="https://https://192.168.1.5">https://https://192.168.1.5</a> (login: admin, password: admin) and click Local Traffic -&gt; <strong>Virtual Servers</strong></li>
 <li>Click <strong>api.vlab.f5demo.com</strong></li>
-<li>Change Access Profile from none to <strong>api-psp</strong> (NOT as-psp)</li>
-<li>Change Per Request Policy from none to <strong>api-prp</strong></li>
+<li>Change Access Profile from none to <strong>prebuilt-api-psp</strong></li>
+<li>Change Per Request Policy from none to <strong>prebuilt-api-prp</strong></li>
 </ol>
 <blockquote>
-<div><img alt="../../_images/image19.png" src="../../_images/image19.png" />
+<div><img alt="../../_images/assign.png" src="../../_images/assign.png" />
 </div></blockquote>
 <ol class="arabic simple" start="5">
 <li>Click Update</li>
